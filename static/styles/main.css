@@ -9,11 +9,11 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    max-width: 400px;
+    max-width: 500px; /* Increased width */
     margin: 40px auto;
     text-align: center;
 }
@@ -23,16 +23,26 @@ h2 {
     margin-bottom: 20px;
 }
 
-label, input[type=text], input[type=email], input[type=tel], input[type=submit] {
+label {
+    text-align: left; /* Align label text to the left */
     display: block;
-    width: calc(100% - 20px);
-    margin: 10px auto;
-    padding: 10px;
+    margin-left: 10px; /* Adjust as needed */
+    font-weight: bold; /* Optional: Makes labels stand out */
 }
 
 input[type=text], input[type=email], input[type=tel] {
     border: 1px solid #ccc;
     border-radius: 4px;
+    padding: 10px;
+    display: block;
+    width: calc(100% - 22px); /* Adjust width to fit the container */
+    margin: 10px 0; /* Center inputs within the form */
+}
+
+input[type=text]:focus, input[type=email]:focus, input[type=tel]:focus {
+    outline: none;
+    border-color: #4A154B;
+    box-shadow: 0 0 0 2px rgba(74, 21, 75, 0.25);
 }
 
 input[type=submit] {
@@ -42,18 +52,30 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    padding: 12px;
+    width: 50%; /* Makes the button 2/3 the width of the container */
+    margin: 20px auto; /* Centers the button within the form */
+    display: block; /* Ensures the width percentage is respected */
 }
 
 input[type=submit]:hover {
     background-color: #371037;
 }
 
+a:hover {
+    text-decoration: underline;
+    color: #371037; /* Darker shade for contrast */
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
         width: 90%;
         margin: 20px auto;
+        max-width: 90%; /* Make sure the form is responsive on smaller screens */
     }
 }
+
 
 /* Add any other styles for links or specific elements as needed */
