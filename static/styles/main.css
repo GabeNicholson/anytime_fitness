@@ -18,9 +18,9 @@ body {
     text-align: center;
 }
 
-h2 {
+h4 {
     color: #4A154B; /* Anytime Fitness Purple */
-    margin-bottom: 20px;
+    margin: 10px 0 20px; /* Add some spacing */
 }
 
 label {
@@ -67,6 +67,9 @@ a:hover {
     color: #371037; /* Darker shade for contrast */
 }
 
+form {
+    margin-top: 20px; /* Adds space between the text and form */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
