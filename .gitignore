@@ -14,7 +14,7 @@ test.db
 log.txt
 Pipfile.lock
 env3.*
-env
+.env
 docs_build
 site_build
 venv
@@ -27,4 +27,4 @@ archive.zip
 .cache
 
 # macOS
-.DS_Store
+.DS_Store.env
