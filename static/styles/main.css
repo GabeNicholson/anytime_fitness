@@ -82,3 +82,7 @@ form {
 
 
 /* Add any other styles for links or specific elements as needed */
+.container p:first-child {
+    font-weight: bold;
+    color: #4A154B; /* Adjust the color to match your design */
+}
