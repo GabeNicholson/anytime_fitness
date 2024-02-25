@@ -1,10 +1,33 @@
-body {
+/* Default font size for larger screens */
+/*body, input, button, p, h1, h2, h3, label {*/
+/*    font-size: 16px; !* Adjust as needed *!*/
+/*}*/
+
+/* Media query for smartphones */
+@media (max-width: 768px) {
+    body, input, button, p, h1, h2, h3, label {
+        font-size: 14px; /* Smaller font size for small screens */
+    }
+
+    /* You might want specific elements to have different sizes */
+    h1 {
+        font-size: 24px; /* Slightly larger font size for headings */
+    }
+    p, label {
+        font-size: 14px; /* Even smaller font for less critical text */
+    }
+}
+
+html, body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     background-color: #f0f2f5;
     background-image: url('/static/images/gym_photo.png'); /* Example background image */
     background-size: cover;
-    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat; /* Prevent the background from repeating */
+    background-position: center; /* Center the background image */
+    -webkit-background-size: cover;
     color: #333;
 }
 
@@ -74,7 +97,9 @@ form {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        width: 90%;
+        padding: 20px;
+        /*width: 90%;*/
+        width: auto;
         margin: 20px auto;
         max-width: 90%; /* Make sure the form is responsive on smaller screens */
     }

@@ -6,13 +6,16 @@ import models
 
 app = FastAPI()
 
+
 @app.on_event("startup")
 async def startup():
     await models.database.connect()
 
+
 @app.on_event("shutdown")
 async def shutdown():
     await models.database.disconnect()
+
 
 # Set up template directory
 templates = Jinja2Templates(directory="templates")
@@ -20,13 +23,16 @@ templates = Jinja2Templates(directory="templates")
 # Mount static directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
     return templates.TemplateResponse("signup_form.html", {"request": request})
 
+
 @app.get("/success", response_class=HTMLResponse)
 async def signup_success(request: Request):
     return templates.TemplateResponse("success_page.html", {"request": request})
+
 
 @app.post("/signup")
 async def form_signup(request: Request, name: str = Form(...), email: str = Form(...), phone: str = Form(...)):
