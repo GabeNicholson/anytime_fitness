@@ -4,14 +4,27 @@
     <title>Anytime Fitness Terry Fox</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/styles/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=0.9">
+    <!-- Twitter conversion tracking base code -->
+    <script>
+        !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+        },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+        a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+        twq('config','oka17');
+    </script>
+    <!-- End Twitter conversion tracking base code -->
+    <!-- Twitter conversion tracking event code -->
+    <script type="text/javascript">
+        // Insert Twitter Event ID
+        twq('event', 'tw-oka17-oka1f', {
+        });
+    </script>
+    <!-- End Twitter conversion tracking event code -->
 </head>
 <body>
     <div class="container">
         <h1>Grand Opening Sale</h1>
         <h4>Kanata's brand new 24/7 access fitness club</h4>
         <p>Exclusive Offer: Normally $79, sign up now for just $1! <br>Enter your details below to secure this limited-time deal.</br> </p>
-<!--        <p>Exclusive Offer: Normally $79, sign up now for just $1!-->
-<!--        <p>Enter your details below to secure this limited-time deal.</p>-->
         <!-- Form here -->
         <form action="/signup" method="post">
             <label for="name">Name:</label>
@@ -27,6 +40,19 @@
             | <a href="https://www.instagram.com/anytimefitnessterryfox/" target="_blank">Follow Us on Instagram</a>
             | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank">Google Maps</a>
         </p>
+        <script type="text/javascript">
+            // Function to trigger Twitter Pixel event
+            function trackScheduleTourEvent() {
+                twq('track', 'tw-oka17-oka2v', {
+                    // You can add event-specific properties here if needed
+                });
+            }
+            // Add click event listener to the link
+            document.getElementById('scheduleTourLink').addEventListener('click', function() {
+                trackScheduleTourEvent();
+            });
+        </script>
+
     </div>
 </body>
 </html>
