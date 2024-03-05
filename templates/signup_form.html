@@ -36,7 +36,7 @@
             <input type="submit" value="Submit">
         </form>
         <p>
-            <a href="https://www.anytimefitness.com/schedule-an-appointment-online/?club=5464" target="_blank">Schedule a Tour</a>
+            <a href="https://www.anytimefitness.com/schedule-an-appointment-online/?club=5464" target="_blank" id="scheduleTourLink">Schedule a Tour</a>
             | <a href="https://www.instagram.com/anytimefitnessterryfox/" target="_blank">Follow Us on Instagram</a>
             | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank">Google Maps</a>
         </p>
@@ -50,9 +50,23 @@
             // Add click event listener to the link
             document.getElementById('scheduleTourLink').addEventListener('click', function() {
                 trackScheduleTourEvent();
-            });
-        </script>
 
+                // Send data to server for database logging
+                fetch('/track-click', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: "schedule_tour_clicked", 
+                        timestamp: new Date().toISOString(),
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .catch((error) => console.error('Error:', error));
+            });
+            </script>
     </div>
 </body>
 </html>

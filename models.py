@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, SmallInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 from sqlalchemy.orm import sessionmaker
@@ -20,7 +20,12 @@ class User(Base):
     phone = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), default=func.now())  # Add this line
 
-
+class ClickEvent(Base):
+    __tablename__ = "click_events"
+    id = Column(Integer, primary_key=True, index=True)
+    action = Column(SmallInteger, index=True)
+    timestamp = Column(DateTime)
+    
 # SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
 
