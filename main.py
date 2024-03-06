@@ -5,9 +5,19 @@ from fastapi.templating import Jinja2Templates
 import models
 import pydantic_models
 import traceback
+from starlette.middleware.sessions import SessionMiddleware
+import uuid
+
+def get_or_create_session_id(request: Request):
+    # Check if the session already has a session_id set
+    if "session_id" not in request.session:
+        # Generate a new session_id and save it to the session
+        request.session["session_id"] = str(uuid.uuid4())
+    return request.session["session_id"]
+
 
 app = FastAPI()
-
+app.add_middleware(SessionMiddleware, secret_key="your_secret_key")
 
 @app.on_event("startup")
 async def startup():
@@ -28,6 +38,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
+    referer = request.headers.get("referer")
     return templates.TemplateResponse("signup_form.html", {"request": request})
 
 
@@ -38,7 +49,8 @@ async def signup_success(request: Request):
 
 @app.post("/signup")
 async def form_signup(request: Request, name: str = Form(...), email: str = Form(...), phone: str = Form(...)):
-    query = models.User.__table__.insert().values(name=name, email=email, phone=phone)
+    session_id = get_or_create_session_id(request)
+    query = models.User.__table__.insert().values(name=name, email=email, phone=phone, session_id=session_id)
     last_record_id = await models.database.execute(query)
     # Redirect to the success page after processing
     return RedirectResponse(url="/success", status_code=303)
@@ -50,19 +62,19 @@ action_mapping = {
 }
 
 @app.post("/track-click")
-async def track_click(event: pydantic_models.ClickEvent):
+async def track_click(request: Request, event: pydantic_models.ClickEvent):
+    session_id = get_or_create_session_id(request)
     action_int = action_mapping.get(event.action, 0)
     naive_timestamp = event.timestamp.replace(tzinfo=None)
     try:
         query = models.ClickEvent.__table__.insert().values(
             action=action_int,
-            timestamp=naive_timestamp
+            timestamp=naive_timestamp,
+            session_id=session_id
         )
         last_record_id = await models.database.execute(query)
         return {"status": "success", "record_id": last_record_id}
     except Exception as e:
-        # Log the exception to console or file
         traceback.print_exc()  # Print the traceback to help debug
         print(f"Error inserting click event: {e}")
-        # Optionally, return an error response
         raise HTTPException(status_code=500, detail="Internal server error")

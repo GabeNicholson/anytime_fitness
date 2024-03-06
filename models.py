@@ -18,13 +18,15 @@ class User(Base):
     name = Column(String, index=True)
     email = Column(String, index=True)
     phone = Column(String, index=True)
-    created_at = Column(DateTime(timezone=True), default=func.now())  # Add this line
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    session_id = Column(String)
 
 class ClickEvent(Base):
     __tablename__ = "click_events"
     id = Column(Integer, primary_key=True, index=True)
     action = Column(SmallInteger, index=True)
     timestamp = Column(DateTime)
+    session_id = Column(String)
     
 # SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
