@@ -38,19 +38,16 @@
         </form>
         <p>
             <a href="https://www.anytimefitness.com/schedule-an-appointment-online/?club=5464" target="_blank" id="scheduleTourLink">Schedule a Tour</a>
-            | <a href="https://www.instagram.com/anytimefitnessterryfox/" target="_blank">Follow Us on Instagram</a>
-            | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank">Google Maps</a>
+            | <a href="https://www.instagram.com/anytimefitnessterryfox/" target="_blank" id="followInstaLink" >Follow Us on Instagram</a>
+            | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank" id="googleMapsLink">Google Maps</a>
         </p>
         <script type="text/javascript">
-            // Function to trigger Twitter Pixel event
-            function trackScheduleTourEvent() {
-                twq('track', 'tw-oka17-oka2v', {
-                    // You can add event-specific properties here if needed
+            // General function to track any link click event
+            function trackLinkClick(actionIdentifier) {
+                // Trigger Twitter Pixel event specific to the action
+                twq('track', actionIdentifier, {
+                    // Event-specific properties can be added here if needed
                 });
-            }
-            // Add click event listener to the link
-            document.getElementById('scheduleTourLink').addEventListener('click', function() {
-                trackScheduleTourEvent();
 
                 // Send data to server for database logging
                 fetch('/track-click', {
@@ -59,15 +56,28 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        action: "schedule_tour_clicked", 
+                        action: actionIdentifier,
                         timestamp: new Date().toISOString(),
                     }),
                 })
                 .then(response => response.json())
                 .then(data => console.log('Success:', data))
                 .catch((error) => console.error('Error:', error));
+            }
+
+            // Attach click event listeners to each link with the respective action identifier
+            document.getElementById('scheduleTourLink').addEventListener('click', function() {
+                trackLinkClick("schedule_tour_clicked");
             });
-            </script>
+
+            document.getElementById('followInstaLink').addEventListener('click', function() {
+                trackLinkClick("follow_instagram_clicked");
+            });
+
+            document.getElementById('googleMapsLink').addEventListener('click', function() {
+                trackLinkClick("google_maps_clicked");
+            });
+        </script>
     </div>
 </body>
 </html>

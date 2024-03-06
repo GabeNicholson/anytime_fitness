@@ -56,15 +56,16 @@ async def form_signup(request: Request, name: str = Form(...), email: str = Form
     return RedirectResponse(url="/success", status_code=303)
 
 
-action_mapping = {
+ACTION_MAPPING = {
     "schedule_tour_clicked": 1,
-    # Add more mappings as needed
+    "follow_instagram_clicked": 2,
+    "google_maps_clicked": 3,
 }
 
 @app.post("/track-click")
 async def track_click(request: Request, event: pydantic_models.ClickEvent):
     session_id = get_or_create_session_id(request)
-    action_int = action_mapping.get(event.action, 0)
+    action_int = ACTION_MAPPING.get(event.action, 0)
     naive_timestamp = event.timestamp.replace(tzinfo=None)
     try:
         query = models.ClickEvent.__table__.insert().values(
