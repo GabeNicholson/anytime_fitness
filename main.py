@@ -39,7 +39,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
     referer = request.headers.get("referer")
-    return templates.TemplateResponse("signup_form.html", {"request": request})
+    return templates.TemplateResponse("signup_form.html", {"request": request, "referer": referer})
 
 
 @app.get("/success", response_class=HTMLResponse)
@@ -48,9 +48,13 @@ async def signup_success(request: Request):
 
 
 @app.post("/signup")
-async def form_signup(request: Request, name: str = Form(...), email: str = Form(...), phone: str = Form(...)):
+async def form_signup(request: Request, name: str = Form(...), email: str = Form(...), phone: str = Form(...), referer: str = Form(...)):
     session_id = get_or_create_session_id(request)
-    query = models.User.__table__.insert().values(name=name, email=email, phone=phone, session_id=session_id)
+    query = models.User.__table__.insert().values(name=name,
+                                                  email=email,
+                                                  phone=phone,
+                                                  session_id=session_id,
+                                                  referer=referer)
     last_record_id = await models.database.execute(query)
     # Redirect to the success page after processing
     return RedirectResponse(url="/success", status_code=303)

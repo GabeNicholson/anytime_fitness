@@ -20,6 +20,7 @@ class User(Base):
     phone = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), default=func.now())
     session_id = Column(String)
+    referer = Column(String)
 
 class ClickEvent(Base):
     __tablename__ = "click_events"
