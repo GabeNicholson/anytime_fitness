@@ -50,11 +50,13 @@ async def signup_success(request: Request):
 @app.post("/signup")
 async def form_signup(request: Request, name: str = Form(...), email: str = Form(...), phone: str = Form(...), referer: str = Form(...)):
     session_id = get_or_create_session_id(request)
+    ip_address = request.client.host
     query = models.User.__table__.insert().values(name=name,
                                                   email=email,
                                                   phone=phone,
                                                   session_id=session_id,
-                                                  referer=referer)
+                                                  referer=referer,
+                                                  ip_address=ip_address)
     last_record_id = await models.database.execute(query)
     # Redirect to the success page after processing
     return RedirectResponse(url="/success", status_code=303)
@@ -69,13 +71,13 @@ ACTION_MAPPING = {
 @app.post("/track-click")
 async def track_click(request: Request, event: pydantic_models.ClickEvent):
     session_id = get_or_create_session_id(request)
+    ip_address = request.client.host
     action_int = ACTION_MAPPING.get(event.action, 0)
-    naive_timestamp = event.timestamp.replace(tzinfo=None)
     try:
         query = models.ClickEvent.__table__.insert().values(
             action=action_int,
-            timestamp=naive_timestamp,
-            session_id=session_id
+            session_id=session_id,
+            ip_address=ip_address
         )
         last_record_id = await models.database.execute(query)
         return {"status": "success", "record_id": last_record_id}

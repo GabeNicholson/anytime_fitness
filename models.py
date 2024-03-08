@@ -21,13 +21,15 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), default=func.now())
     session_id = Column(String)
     referer = Column(String)
+    ip_address = Column(String)
 
 class ClickEvent(Base):
     __tablename__ = "click_events"
     id = Column(Integer, primary_key=True, index=True)
     action = Column(SmallInteger, index=True)
-    timestamp = Column(DateTime)
+    timestamp = Column(DateTime(timezone=True), default=func.now())
     session_id = Column(String)
+    ip_address = Column(String)
     
 # SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
