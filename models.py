@@ -5,6 +5,8 @@ from sqlalchemy.orm import sessionmaker
 import databases
 import os
 from dotenv import load_dotenv
+from datetime import datetime
+import pytz
 
 load_dotenv()  # This loads variables from .env into the environment
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -18,6 +20,7 @@ class User(Base):
     name = Column(String, index=True)
     email = Column(String, index=True)
     phone = Column(String, index=True)
+    timestamp = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.utc))
     created_at = Column(DateTime(timezone=True), default=func.now())
     session_id = Column(String)
     referer = Column(String)
@@ -27,6 +30,7 @@ class ClickEvent(Base):
     __tablename__ = "click_events"
     id = Column(Integer, primary_key=True, index=True)
     action = Column(SmallInteger, index=True)
+    timestamp_v2 = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.utc))
     timestamp = Column(DateTime(timezone=True), default=func.now())
     session_id = Column(String)
     ip_address = Column(String)

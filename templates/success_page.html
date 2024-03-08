@@ -16,7 +16,9 @@
     <!-- Twitter conversion tracking event code -->
     <script type="text/javascript">
         // Insert Twitter Event ID
-        twq('event', 'tw-oka17-oka1f', {});
+        twq('event', 'tw-oka17-oka1f', {
+            conversion_id: "{{ sessionId }}"  // Use Jinja templating to inject sessionId
+        });
     </script>
     <!-- End Twitter conversion tracking event code -->
 
