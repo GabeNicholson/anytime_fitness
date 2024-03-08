@@ -40,14 +40,14 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_form(request: Request):
-    session_id = get_or_create_session_id(request)
     referer = request.headers.get("referer")
-    return templates.TemplateResponse("signup_form.html", {"request": request, "sessionId": session_id, "referer": referer})
+    return templates.TemplateResponse("signup_form.html", {"request": request, "referer": referer})
 
 
 @app.get("/success", response_class=HTMLResponse)
 async def signup_success(request: Request):
-    return templates.TemplateResponse("success_page.html", {"request": request})
+    session_id = get_or_create_session_id(request)
+    return templates.TemplateResponse("success_page.html", {"request": request, "sessionId": session_id})
 
 
 @app.post("/signup")

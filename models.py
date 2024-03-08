@@ -5,8 +5,6 @@ from sqlalchemy.orm import sessionmaker
 import databases
 import os
 from dotenv import load_dotenv
-from datetime import datetime
-import pytz
 
 load_dotenv()  # This loads variables from .env into the environment
 DATABASE_URL = os.getenv("DATABASE_URL")
