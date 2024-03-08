@@ -7,6 +7,8 @@ import pydantic_models
 import traceback
 from starlette.middleware.sessions import SessionMiddleware
 import uuid
+import pytz
+from datetime import datetime
 
 def get_or_create_session_id(request: Request):
     # Check if the session already has a session_id set
@@ -57,7 +59,9 @@ async def form_signup(request: Request, name: str = Form(...), email: str = Form
                                                   phone=phone,
                                                   session_id=session_id,
                                                   referer=referer,
-                                                  ip_address=ip_address)
+                                                  ip_address=ip_address,
+                                                  created_at_v2=datetime.now(pytz.utc),
+                                                  )
     last_record_id = await models.database.execute(query)
     # Redirect to the success page after processing
     return RedirectResponse(url="/success", status_code=303)
@@ -78,7 +82,8 @@ async def track_click(request: Request, event: pydantic_models.ClickEvent):
         query = models.ClickEvent.__table__.insert().values(
             action=action_int,
             session_id=session_id,
-            ip_address=ip_address
+            ip_address=ip_address,
+            timestamp_v2=datetime.now(pytz.utc),
         )
         last_record_id = await models.database.execute(query)
         return {"status": "success", "record_id": last_record_id}

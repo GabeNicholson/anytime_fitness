@@ -20,18 +20,19 @@ class User(Base):
     name = Column(String, index=True)
     email = Column(String, index=True)
     phone = Column(String, index=True)
-    timestamp = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.utc))
     created_at = Column(DateTime(timezone=True), default=func.now())
+    created_at_v2 = Column(DateTime(timezone=True))
     session_id = Column(String)
     referer = Column(String)
     ip_address = Column(String)
+
 
 class ClickEvent(Base):
     __tablename__ = "click_events"
     id = Column(Integer, primary_key=True, index=True)
     action = Column(SmallInteger, index=True)
-    timestamp_v2 = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.utc))
     timestamp = Column(DateTime(timezone=True), default=func.now())
+    timestamp_v2 = Column(DateTime(timezone=True))
     session_id = Column(String)
     ip_address = Column(String)
     
