@@ -45,10 +45,10 @@
         <script type="text/javascript">
             // General function to track any link click event
             function trackLinkClick(actionIdentifier) {
-                // Trigger Twitter Pixel event specific to the action
-                twq('track', actionIdentifier, {
-                    // Event-specific properties can be added here if needed
-                });
+                // // Trigger Twitter Pixel event specific to the action
+                // twq('track', actionIdentifier, {
+                //     // Event-specific properties can be added here if needed
+                // });
 
                 // Send data to server for database logging
                 fetch('/track-click', {
