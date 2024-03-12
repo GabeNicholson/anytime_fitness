@@ -11,9 +11,8 @@ import pytz
 from datetime import datetime
 
 def get_or_create_session_id(request: Request):
-    # Check if the session already has a session_id set
+    '''Generate a new session_id and save it to the session so it is only used once.'''
     if "session_id" not in request.session:
-        # Generate a new session_id and save it to the session
         request.session["session_id"] = str(uuid.uuid4())
     return request.session["session_id"]
 
@@ -63,7 +62,7 @@ async def form_signup(request: Request, name: str = Form(...), email: str = Form
                                                   ip_address=ip_address,
                                                   created_at_v2=datetime.now(pytz.utc),
                                                   )
-    last_record_id = await models.database.execute(query)
+    await models.database.execute(query)
     # Redirect to the success page after processing
     return RedirectResponse(url="/success", status_code=303)
 
