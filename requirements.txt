@@ -15,6 +15,7 @@ MarkupSafe==2.1.5
 numpy==1.26.4
 pandas==2.2.1
 psycopg2==2.9.9
+pyarrow==15.0.1
 pydantic==2.6.2
 pydantic_core==2.16.3
 python-dateutil==2.9.0.post0
