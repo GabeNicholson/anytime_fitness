@@ -38,18 +38,13 @@
             <input type="submit" value="Submit">
         </form>
         <p>
-            <a href="https://www.anytimefitness.com/schedule-an-appointment-online/?club=5464" target="_blank" id="scheduleTourLink">Schedule a Tour</a>
+            <a href="https://www.anytimefitness.com/schedule-an-appointment-online/?club=5464" target="_blank" id="scheduleTourLink" >Schedule a Tour</a>
             | <a href="https://www.instagram.com/anytimefitnessterryfox/" target="_blank" id="followInstaLink" >Follow Us on Instagram</a>
-            | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank" id="googleMapsLink">Google Maps</a>
+            | <a href="https://maps.app.goo.gl/5pfLRHsxyMWi1yLu8" target="_blank" id="googleMapsLink" >Google Maps</a>
         </p>
         <script type="text/javascript">
             // General function to track any link click event
             function trackLinkClick(actionIdentifier) {
-                // // Trigger Twitter Pixel event specific to the action
-                // twq('track', actionIdentifier, {
-                //     // Event-specific properties can be added here if needed
-                // });
-
                 // Send data to server for database logging
                 fetch('/track-click', {
                     method: 'POST',

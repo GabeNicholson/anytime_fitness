@@ -4,6 +4,7 @@
     <title>Signup Success</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/styles/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+
     <!-- Twitter conversion tracking base code -->
     <script>
         !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
@@ -17,7 +18,7 @@
     <script type="text/javascript">
         // Insert Twitter Event ID
         twq('event', 'tw-oka17-oka1f', {
-            conversion_id: "{{ sessionId }}"  // Use Jinja templating to inject sessionId
+            conversion_id: "{{ sessionId }}" 
         });
     </script>
     <!-- End Twitter conversion tracking event code -->
