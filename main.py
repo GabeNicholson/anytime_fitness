@@ -14,12 +14,10 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()  # This loads variables from .env into the environment
-cloudinary_key = os.getenv("cloudinary_key")
-cloudinary_secret = os.getenv("cloudinary_secret")
-      
+cloudinary_secret = os.getenv("CLOUDINARY_SECRET")
 cloudinary.config( 
   cloud_name = "dqewhz92k", 
-  api_key = cloudinary_key, 
+  api_key = 633421137926736, 
   api_secret = cloudinary_secret
 )
 
@@ -31,7 +29,7 @@ def get_or_create_session_id(request: Request):
 
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="your_secret_key")
+app.add_middleware(SessionMiddleware, secret_key=os.getenv("MIDDLEWEAR_SECRET"))
 
 @app.on_event("startup")
 async def startup():
