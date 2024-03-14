@@ -2,13 +2,26 @@ from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 import models
 import pydantic_models
 import traceback
-from starlette.middleware.sessions import SessionMiddleware
 import uuid
 import pytz
 from datetime import datetime
+import cloudinary
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # This loads variables from .env into the environment
+cloudinary_key = os.getenv("cloudinary_key")
+cloudinary_secret = os.getenv("cloudinary_secret")
+      
+cloudinary.config( 
+  cloud_name = "dqewhz92k", 
+  api_key = cloudinary_key, 
+  api_secret = cloudinary_secret
+)
 
 def get_or_create_session_id(request: Request):
     '''Generate a new session_id and save it to the session so it is only used once.'''

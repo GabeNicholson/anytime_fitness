@@ -26,7 +26,6 @@ archive.zip
 .*.sw?
 .cache
 
-# macOS
-.DS_Store.env
-
+.DS_Store
+.env
 .ipynb
