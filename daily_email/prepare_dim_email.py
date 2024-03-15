@@ -17,7 +17,7 @@ sql_engine = create_engine(engine_uri)
 connection = sql_engine.raw_connection()
 
 complete_df = pd.read_sql("SELECT * FROM Users ORDER BY id", con=connection)
-
+complete_df = complete_df.groupby(["name", "session_id"], as_index=False).first()
 max_backup_file_suffix: int = prepare_email_helpers.get_backup_file_suffix()
 complete_df.to_parquet(f"../user_db_backup/database_backup_{max_backup_file_suffix}.parquet")
 
@@ -28,6 +28,8 @@ print(f"Previous csv save max id: {df_previous['id'].max()}")
 print(f"total signups: {total_signups}")
 
 new_df = complete_df.loc[complete_df['id'] > df_previous['id'].max()]
+new_df = new_df[new_df['email'] != "test@test.com"]
+
 print("New signup dataframe after filtering by old max id:")
 print(new_df)
 print()
